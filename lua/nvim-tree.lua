@@ -144,6 +144,12 @@ function M.on_enter()
     and ((is_dir and netrw_disabled) or bufname == '')
     and not vim.tbl_contains(ft_ignore, buftype)
   lib.init(should_open, should_open)
+
+    -- hack: close empty dir buffer
+    if is_dir and hijack_netrw and disable_netrw then
+        vim.cmd('wincmd o')
+        vim.cmd('bd#')
+    end
 end
 
 local function is_file_readable(fname)
